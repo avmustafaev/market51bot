@@ -1,0 +1,6 @@
+services:
+  bot:
+    build: .
+    environment:
+      - TOKEN=${TOKEN}
+      - CHANNEL_ID=${CHANNEL_ID}
