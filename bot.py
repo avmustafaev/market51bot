@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.fsm.state import State, StatesGroup
@@ -160,11 +161,8 @@ async def delete_previous_messages(state: FSMContext, chat_id: int):
     messages_to_delete = data.get("messages", [])
 
     for msg_id in messages_to_delete:
-        try:
+        with contextlib.suppress(Exception):
             await bot.delete_message(chat_id=chat_id, message_id=msg_id)
-        except Exception:
-            pass  
-
     await state.update_data(messages=[])
 
 @dp.callback_query(F.data == "send_to_channel")
