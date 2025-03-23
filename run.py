@@ -9,9 +9,7 @@ from app.avito_parser import AvitoParser
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-bot = Bot(token=envi.token)
 CHANNEL_ID = envi.chid
-
 
 bot = Bot(
     token=envi.token,
@@ -99,11 +97,18 @@ async def get_avito_phone(message: types.Message, state: FSMContext):
     phone = message.text.strip()  # Получаем телефон
     data = await state.get_data()  # Получаем все сохранённые данные
     
+    # Формируем ссылку на автора
+    if message.from_user.username:
+        user_link = f'<a href="https://t.me/{message.from_user.username}">🔗 {message.from_user.username}</a>'
+    else:
+        user_link = f'<a href="tg://user?id={message.from_user.id}">🔗 {message.from_user.id}</a>'
+
     # Формируем итоговое сообщение
     result = (
         f"{data.get('parsed_data', '')}"
         f"\n😎 Собственник: {data.get('name', 'Не указано')}\n"
-        f"📞 Телефон: {phone}"
+        f"📞 Телефон: {phone}\n\n"
+        f"<span class='tg-spoiler'>{user_link}</span>"  # Добавляем ссылку на автора
     )
 
     # Отправляем сообщение в канал
