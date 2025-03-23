@@ -1,3 +1,6 @@
 .env
 .venv
 .env_old
+cache/
+app/__pycache__/
+__pycache__/

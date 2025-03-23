@@ -56,7 +56,7 @@ class AvitoParser:
 
     def _process_address(self, address):
         parts = address.split(',')
-        if 'ул.' in parts[-2]:
+        if 'ул.' or 'пр-т' in parts[-2]:
             processed_parts = [part + '\n 📍' for part in parts[:-2]]
             processed_parts.append(f"{parts[-2]},{parts[-1]}")
         else:
